@@ -1,23 +1,26 @@
-import express from "express";
+import express from 'express';
 import * as dotenv from 'dotenv';
-import { Configuration, OpenAIApi } from "openai";
+import { Configuration, OpenAIApi } from 'openai';
+
 
 dotenv.config();
 
 const router = express.Router();
 
 const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-})
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 const openai = new OpenAIApi(configuration);
+
 router.route('/').get((req,res)=>{
-    res.send('API Working from Dall-E Route')
+    res.status(200).json('API Working from Dall-E Route')
 });
 
 router.route('/').post(async(req,res)=>{
     try {
         const {prompt} = req.body; //getting from frontend prompt
+
         const aiResponse = await openai.createImage(
            {
             prompt,
@@ -36,6 +39,6 @@ router.route('/').post(async(req,res)=>{
         console.log(error)
         res.status(500).send(error?.response.data.error.message)
     }
-})
+});
 
 export default router;

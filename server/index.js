@@ -1,14 +1,14 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
-import connectDB from './mongoDB/connect.js';
+import connectDB from './mongodb/connect.js';
 import postRoutes from './routes/postRoutes.js';
 import dalleRoutes from './routes/dalleRoutes.js';
 
 dotenv.config() //pulling environment variable from dotenv file
 
 //adding express application
-const app = express()
+const app = express();
 
 //adding middlewares
 app.use(cors());
@@ -20,7 +20,9 @@ app.use('/api/v1/dalle', dalleRoutes);
 //create route
 
 app.get('/', async (req,res)=>{
-    res.send('Hello from DALL-E')
+    res.status(200).json({
+        message: 'Hello from DALL.E!',
+      });
 })
 
 //running the server
